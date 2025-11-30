@@ -38,7 +38,8 @@ Streams, introduced in Java 8, provide a functional and declarative way to proce
 
 <details>
 <summary id="initialize-streams"><strong>How to Initialize Streams? 🛠️</strong></summary>
-🔗Reference: [initialization of streams](/src/main/java/org/learning/streams/initialization)
+
+🔗Reference code: [initialization of streams](./initialization)
 
 There are several ways to create streams in Java:
 
