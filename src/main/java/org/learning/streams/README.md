@@ -5,6 +5,7 @@
 
 - [Stream Overview 🚀](#stream-overview)
 - [How to Initialize Streams? 🛠️](#initialize-streams)
+ - [Intermediate Operations 🧩](#intermediate-operations)
 
 <details>
 <summary id="stream-overview"><strong>Stream Overview 🚀</strong></summary>
@@ -114,4 +115,148 @@ IntStream rangeExcludingSecondVal = IntStream.range(0, 11); // Prints 0 to 10
 IntStream rangeClosedToIncludeSecondVal = IntStream.rangeClosed(1, 11); // Prints 1 to 11
 ```
 
+</details>
+
+<details>
+<summary id="intermediate-operations"><strong>Intermediate Operations 🧩</strong></summary>
+
+🔗Reference code: [intermediate operations](./intermediateoperations/)
+
+## **Intermediate operations**
+are lazy—they do not execute until a terminal operation is called, and they always produce another stream as output. 💤
+
+---
+
+### 1. `filter` 🕵️‍♂️
+Filters elements based on a predicate and returns a stream of elements that satisfy the condition.
+
+```java
+IntStream.range(1, 11)
+    .filter(num -> num % 2 == 0)
+    .forEach(System.out::println); // even numbers between 1-10
+```
+
+### 2. `map` 🧮
+Transforms each element in the stream to another form.
+
+```java
+IntStream.rangeClosed(1, 10)
+    .map(num -> num * num)
+    .forEach(System.out::println); // squares from 1 to 10
+```
+
+### 3. `flatMap` 🗂️
+Converts nested lists to a single stream to process each item.
+
+```java
+List.of(List.of(1, 2, 3), List.of(4, 5, 6))
+    .stream()
+    .flatMap(Collection::stream)
+    .forEach(System.out::println); // Output: 1,2,3,4,5,6
+```
+
+### 4. `distinct` 🔎
+Returns distinct elements from the stream. For custom objects, `.equals()` is used to determine uniqueness.
+
+```java
+IntStream.of(1, 2, 3, 4, 2, 1)
+    .distinct()
+    .forEach(System.out::println); // 1,2,3,4
+```
+
+### 5. `sorted` 📊
+Sorts the stream elements. Uses natural ordering for primitives; for custom objects, provide a comparator.
+
+```java
+List<Integer> integers = List.of(12, 43, 34, 23, 45, 26);
+integers.stream().sorted().forEach(System.out::println); // ASC: 12 23 26 34 43 45
+integers.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println); // DESC: 45 43 34 26 23 12
+
+// For custom objects
+List<User> users = List.of(new User(23, "Sid"), new User(38, "Mohan"), new User(12, "Ram"));
+users.stream().sorted(Comparator.comparingInt(User::id)).forEach(System.out::println); // ASC
+// Output: User[id=12, name=Ram] User[id=23, name=Sid] User[id=38, name=Mohan]
+users.stream().sorted(Comparator.comparingInt(User::id).reversed()).forEach(System.out::println); // DESC
+// Output: User[id=38, name=Mohan] User[id=23, name=Sid] User[id=12, name=Ram]
+```
+
+### 6. `limit` ⏸️
+Short-circuits the stream after a given number of elements.
+
+```java
+integers.stream().limit(2).forEach(System.out::println); // 12 43
+```
+
+### 7. `skip` ⏭️
+Skips the first N elements in the stream.
+
+```java
+integers.stream().skip(2).forEach(System.out::println); // 34 23 45 26
+```
+
+### 8. `peek` 👀
+Used for debugging; allows you to see elements as they flow through the pipeline. Does not modify elements.
+
+```java
+integers.stream().filter(num -> num % 2 == 0).peek(System.out::println).count(); // 12 34 26
+// For reference types, changes in peek do not affect the stream:
+integers.stream().filter(num -> num % 2 == 0).peek(element -> element *= 10).forEach(System.out::println); // 12 34 26
+```
+
+### 9. `mapToInt`, `mapToLong`, `mapToDouble` 🔢
+Converts objects to primitive streams for performance and access to primitive-specific methods like `sum`, `average`, etc.
+
+```java
+IntStream intStreamPrimitive = integers.stream().mapToInt(num -> num * 10); // 120 430 340 230 450 260
+LongStream longStreamPrimitive = integers.stream().mapToLong(num -> num * 10); // 120 430 340 230 450 260
+DoubleStream doubleStreamPrimitive = integers.stream().mapToDouble(num -> num * 10); // 120.0 430.0 340.0 230.0 450.0 260.0
+```
+
+### 10. `boxed` 📦
+Converts primitive streams to wrapper types.
+
+```java
+Stream<Integer> boxedIntegers = IntStream.of(1, 2, 3, 4).boxed(); // 1,2,3,4
+```
+
+### 11. `takeWhile` ✋
+Processes elements until the predicate fails (early stop). Best used with ordered streams.
+
+```java
+List.of(1, 2, 3, 4, 1, 2).stream().takeWhile(num -> num < 4).forEach(System.out::println); // 1 2 3
+// If using filter, it would print: 1 2 3 1 2
+```
+
+### 12. `dropWhile` 🏃‍♂️
+Skips elements while the predicate is true, then processes the rest.
+
+```java
+List.of(1, 2, 3, 4, 1, 2).stream().dropWhile(num -> num < 4).forEach(System.out::println); // 4 1 2
+```
+
+### 13. `unordered` 🔀
+Hints that the stream does not need to maintain order, improving performance in parallel operations.
+There are some operations which respects the order but if we know order is not imp we can improve the performance by declaring it
+this can be used in places like `parallel`, `distinct`, `limit`, `takeWhile` etc..
+
+
+```java
+integers.stream().unordered().parallel().forEach(System.out::println); //23 26 45 12 43 34 here it not actually useful but just a usage example but u can see the result is unorderd
+   
+```
+
+### 14. `parallel` & `sequential` 🧵
+> - **`parallel()`** 🚀: Enables multi-threaded, unordered processing for time-efficient and CPU-bound tasks.
+> - **`sequential()`** 🧑‍💻: Switches back to single-threaded, ordered processing.
+> - You can combine both in a pipeline to optimize performance as needed.
+> - Even with `parallel()`, if the terminal operation or collector is ordered, the result will be ordered. For guaranteed order, use `forEachOrdered()`.
+
+```java
+integers.stream()
+    .parallel()
+    .map(x -> x + 1)
+    .sequential()
+    .map(x -> x * 10)
+    .forEach(System.out::println); // the things before sequential runs parallel and after that it runs in sequential mode
+```
 </details>
