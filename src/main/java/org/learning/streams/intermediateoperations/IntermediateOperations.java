@@ -25,6 +25,11 @@ public class IntermediateOperations {
         log.info("transforms input data to another form for each element");
         log.info("squares the each number");
         IntStream.rangeClosed(1,10).map(num-> num * num).forEach(System.out::println);
+        log.info("Note there is another function as mapToObj which does the typecasting too if u need different stream in between");
+        log.info("with map it fails for convertion");
+//        IntStream.rangeClosed(1,10).map(num-> String.valueOf(num)).forEach(System.out::println);//this failes bcz u have the intstream and trying to convert to string stream but map on int stream product intstream only to covert use the mapToObj
+        log.info("with mapToObj it works fine");
+        IntStream.rangeClosed(1,10).mapToObj(num-> String.valueOf(num)).forEach(System.out::println);
 
         log.info("3. flatmap");
         log.info("converts nested lists to single stream to process each item");

@@ -144,6 +144,27 @@ IntStream.rangeClosed(1, 10)
     .map(num -> num * num)
     .forEach(System.out::println); // squares from 1 to 10
 ```
+> **ℹ️ Note:**
+> 
+> There is another function called `mapToObj` which allows type conversion if you need a different stream type in between. 
+> 
+> - Using `map` on an `IntStream` fails for conversion to a different type:
+
+```java
+// ❌ This fails because map on IntStream produces another IntStream, not a Stream<String>
+IntStream.rangeClosed(1, 10)
+    .map(num -> String.valueOf(num))
+    .forEach(System.out::println); // Compilation error
+```
+
+> - Using `mapToObj` works fine:
+
+```java
+// ✅ This works because mapToObj converts each int to a String, producing a Stream<String>
+IntStream.rangeClosed(1, 10)
+    .mapToObj(num -> String.valueOf(num))
+    .forEach(System.out::println); //prints 1-10 
+```
 
 ### 3. `flatMap` 🗂️
 Converts nested lists to a single stream to process each item.
