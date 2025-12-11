@@ -1,4 +1,4 @@
 # Concepts
 
-## Table of contents
+## Table of content
 ### [📚 Java Streams Basics](src/main/java/org/learning/streams/README.md)
