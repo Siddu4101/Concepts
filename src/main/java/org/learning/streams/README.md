@@ -5,7 +5,7 @@
 
 - [Stream Overview 🚀](#stream-overview)
 - [How to Initialize Streams? 🛠️](#initialize-streams)
- - [Intermediate Operations 🧩](#intermediate-operations)
+- [Intermediate Operations 🧩](#intermediate-operations)
 
 <details>
 <summary id="stream-overview"><strong>Stream Overview 🚀</strong></summary>
