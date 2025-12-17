@@ -3,7 +3,10 @@ package org.learning.streams.terminaloperations;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -33,5 +36,12 @@ public class TerminalOperations {
         log.info("with identity (seed value to be used for the reduce operation)");
         Integer sumWithIdentity = integers.stream().reduce(1, (x,y)->x+y);
         log.info("sumWithIdentity: {}", sumWithIdentity);
+
+        log.info("3. collect");
+        log.info("converts stream to another form like list, set, map etc...");
+        log.info("there are many other ways to use this collect we will see later");
+        Map<Integer, Long> collect = integers.stream().collect(Collectors.groupingBy(x -> x, Collectors.counting()));// {1=1, 2=1, 3=1, 4=1, 5=1}
+        log.info("the count of each element in the list is {}", collect);
+
     }
 }
