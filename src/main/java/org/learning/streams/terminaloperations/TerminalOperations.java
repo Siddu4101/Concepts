@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 @Slf4j
@@ -29,15 +30,18 @@ public class TerminalOperations {
         String[] array1 = "Siddu".chars().mapToObj(num -> String.valueOf((char) num)).toArray(String[]::new);
 
 
-        log.info("2. reduce");
+        log.info("3. reduce");
         log.info("produces a single value based on the operation");
         Optional<Integer> sum = integers.stream().reduce((x, y) -> x + y);
         log.info("Sum: {}", sum.get());
         log.info("with identity (seed value to be used for the reduce operation)");
         Integer sumWithIdentity = integers.stream().reduce(1, (x,y)->x+y);
         log.info("sumWithIdentity: {}", sumWithIdentity);
+        log.info("Build a large list to force parallel partitioning");
+        log.info("reduce with parallel stream");
 
-        log.info("3. collect");
+
+        log.info("4. collect");
         log.info("converts stream to another form like list, set, map etc...");
         log.info("there are many other ways to use this collect we will see later");
         Map<Integer, Long> collect = integers.stream().collect(Collectors.groupingBy(x -> x, Collectors.counting()));// {1=1, 2=1, 3=1, 4=1, 5=1}
