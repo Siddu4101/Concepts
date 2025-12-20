@@ -1,5 +1,5 @@
 
-# Comparator & Comparable in Java 🆚
+# Comparator 🆚 Comparable in Java 
 
 ## 📑 Navigation
 
