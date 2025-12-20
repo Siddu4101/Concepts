@@ -5,7 +5,8 @@
 
 - [Stream Overview 🚀](#stream-overview)
 - [How to Initialize Streams? 🛠️](#initialize-streams)
- - [Intermediate Operations 🧩](#intermediate-operations)
+- [Intermediate Operations 🧩](#intermediate-operations)
+- [Terminal Operations 🖥️](#terminal-operations)
 
 <details>
 <summary id="stream-overview"><strong>Stream Overview 🚀</strong></summary>
@@ -279,5 +280,110 @@ integers.stream()
     .sequential()
     .map(x -> x * 10)
     .forEach(System.out::println); // the things before sequential runs parallel and after that it runs in sequential mode
+```
+
+</details>
+
+<details>
+<summary id="terminal-operations"><strong>Terminal Operations 🖥️</strong></summary>
+
+🔗Reference code: [terminal operations](./terminaloperations/)
+
+## **Terminal Operations**
+Terminal operations produce a result or a side-effect and trigger the actual processing of the stream pipeline. Once a terminal operation is invoked, the stream is considered consumed and can no longer be used.
+
+---
+
+### 1. `forEach` & `forEachOrdered` 🔄
+Consume each element and perform an operation on it.
+
+```java
+List<Integer> integers = List.of(1, 2, 3, 4, 5);
+// forEach: doesn't guarantee order in parallel streams
+integers.stream().parallel().forEach(System.out::println); // 3 2 1 4 5
+// forEachOrdered: maintains order even in parallel streams
+integers.stream().parallel().forEachOrdered(System.out::println); // 1 2 3 4 5
+```
+
+### 2. `toArray()` 🧮
+Converts the stream to an array.
+
+```java
+int[] array = "Siddu".chars().toArray();
+// To convert to a specific type:
+String[] array1 = "Siddu".chars().mapToObj(num -> String.valueOf((char) num)).toArray(String[]::new);
+```
+
+### 3. `reduce` ➕
+Produces a single value based on the operation.
+
+```java
+Optional<Integer> sum = integers.stream().reduce((x, y) -> x + y);
+System.out.println("Sum: " + sum.get());
+// With identity (seed value):
+Integer sumWithIdentity = integers.stream().reduce(1, (x, y) -> x + y);
+System.out.println("sumWithIdentity: " + sumWithIdentity);
+```
+
+### 4. `collect` 📥
+Converts stream to another form like List, Set, Map, etc.
+
+```java
+List<Integer> doubledList = integers.stream().map(x -> x * 2).collect(Collectors.toList()); // [2, 4, 6, 8, 10]
+Map<Integer, Long> collect = integers.stream().collect(Collectors.groupingBy(x -> x, Collectors.counting())); // {1=1, 2=1, 3=1, 4=1, 5=1}
+```
+
+### 5. Matching (Short-circuiting) ✅
+Check conditions on elements:
+
+```java
+// anyMatch: at least one element matches
+boolean anyMatch = integers.stream().anyMatch(x -> x > 3); // true
+// allMatch: all elements match
+boolean allMatch = integers.stream().allMatch(x -> x > 3); // false
+// noneMatch: no elements match
+boolean noneMatch = integers.stream().noneMatch(x -> x > 3); // false
+```
+
+### 6. Finding Elements (Short-circuiting) 🔍
+
+```java
+// findFirst: gets the first element (ordered collections)
+Optional<Integer> findFirst = integers.stream().findFirst(); // 1
+// findAny: gets any element (best for parallel streams)
+Optional<Integer> findAny = integers.stream().findAny(); // any element
+```
+
+### 7. `count` 🔢
+Gets the count of elements in the stream.
+
+```java
+long count = integers.stream().count(); // 5
+```
+
+### 8. `min` & `max` 📉📈
+Finds the minimum and maximum elements using a comparator.
+
+```java
+Optional<Integer> min = integers.stream().min(Integer::compareTo); // 1
+Optional<Integer> max = integers.stream().max(Integer::compareTo); // 5
+```
+
+### 9. `toArray` (again) 🗃️
+By default, produces an Object array. You can also specify a constructor for typecasting.
+
+```java
+Object[] objectArray = integers.stream().toArray();
+Integer[] integerArray = integers.stream().toArray(Integer[]::new);
+```
+
+### 10. Special Primitive Stream Terminal Operations 🏁
+For `IntStream`, `LongStream`, `DoubleStream`: sum, min, max, count, average, and statistics.
+
+```java
+IntStream intStream = integers.stream().mapToInt(num -> num);
+int intSum = intStream.sum(); // 15
+IntSummaryStatistics intSummaryStatistics = integers.stream().mapToInt(num -> num).summaryStatistics();
+// summary: IntSummaryStatistics{count=5, sum=15, min=1, average=3.000000, max=5}
 ```
 </details>
