@@ -3,14 +3,16 @@
 
 ## 📑 Navigation
 
-- [Interface Overview](#interface-overview)
+- [Interface Overview 🛝](#interface-overview)
+- [Abstract class 🏛️](#abstract-class)
 
 <details>
 <summary id="interface-overview"> <strong>Interface Overview 🧩</strong></summary>
 
-🔗 Reference: [interfaces](./interfaces)
+🔗 Reference: [interfaces example](./interfaces)
 
 - Interfaces help to loosely couple classes between different layers.
+- Interfaces can't have final methods as they are designed to inherit but final avoids that
 - All methods in an interface are <b>public</b> by default.
 - Variables are <code>public static final</code> (non-mutable).
 - Interfaces can have <b>abstract</b>, <b>default</b>, <b>static</b>, and <b>private</b> methods (private methods are accessible only inside default methods).
@@ -91,5 +93,100 @@ public class MultiPleInheritanceViaInterface implements InterfaceTest, Interface
 
 > ℹ️ <b>Note:</b> Interfaces can extend multiple interfaces, but classes cannot extend multiple classes (diamond problem).
 
+
+</details>
+
+<details>
+<summary id="abstract-class"><strong>Abstract class 🏛️</strong></summary>
+
+🔗 Reference: [abstract class examples](./abstractclass)
+
+
+### What is an Abstract Class?
+
+- An <b>abstract class</b> is declared using the <code>abstract</code> keyword and may contain zero or more abstract methods.
+- The <code>abstract</code> keyword is required for both the class and its abstract methods (methods without a body).
+- You <b>cannot instantiate</b> an abstract class directly. Any subclass must implement all abstract methods, unless the subclass is also abstract.
+- Abstract classes can have: It is similar to normal class and can have all things like normal class 
+  - Constructors (used by subclasses)
+  - Fields (instance/static/final)
+  - Concrete methods
+  - Final methods
+  - Static methods
+- <b>Abstract methods</b> <i>cannot</i> be <code>final</code>, <code>static</code>, or <code>private</code>:
+  - <b>final</b> ⛔ prevents overriding
+  - <b>static</b> 🏷️ is class-level (only method hiding, not overriding)
+  - <b>private</b> 🔒 makes methods inaccessible to subclasses
+
+```java
+// Example: Abstract class and inheritance
+public class AbstractClassExample extends AbstractClass1 {
+    // If we don't implement abstractMethod(), this class must also be abstract
+    public AbstractClassExample(String name) {
+        super(name); // Calls abstract class constructor
+    }
+
+    @Override
+    void abstractMethod() {
+        System.out.println("Implementation for abstract method from AbstractClassExample");
+    }
+
+    public static void main(String[] args) {
+        AbstractClassExample abstractClassExample = new AbstractClassExample("Sid");
+        abstractClassExample.abstractMethod();
+        abstractClassExample.instanceMethod();
+        AbstractClass1.staticMethod();
+    }
+}
+
+abstract class AbstractClass1 extends AbstractClass2 { // You can extend one abstract class from another
+    // Instance variable
+    private String name;
+
+    // Static and final variable
+    private final static Integer CON = 100;
+
+    // Constructor
+    public AbstractClass1(String name) {
+        this.name = name;
+    }
+
+    // Abstract method
+    abstract void abstractMethod();
+
+    // Instance method
+    void instanceMethod() {
+        System.out.println("Name is " + name);
+        System.out.println("Instance method inside AbstractClass1");
+    }
+
+    // Final method
+    final void finalMethod() {
+        System.out.println("Final method inside AbstractClass1");
+    }
+
+    // Static method
+    static void staticMethod() {
+        System.out.println("Static method inside AbstractClass1");
+    }
+}
+
+abstract class AbstractClass2 { // With 0 abstract methods, still an abstract class
+}
+```
+
+---
+
+### When to Choose Interface vs Abstract Class?
+
+| ❓ Question                           | ✅ Choose         |
+|---------------------------------------|------------------|
+| Need fields / state?                  | Abstract class   |
+| Need constructors?                    | Abstract class   |
+| Need method implementations?          | Abstract class   |
+| IS-A relationship?                    | Abstract class   |
+| Classes are unrelated?                | Interface        |
+| Need loose coupling / API contract?   | Interface        |
+| Need multiple inheritance?            | Interface        |
 
 </details>
