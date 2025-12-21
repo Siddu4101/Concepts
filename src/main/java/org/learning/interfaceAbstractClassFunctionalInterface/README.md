@@ -1,10 +1,10 @@
-
 # Interface 🆚 Abstract Class & Functional Interface
 
 ## 📑 Navigation
 
 - [Interface Overview 🛝](#interface-overview)
 - [Abstract class 🏛️](#abstract-class)
+- [Functional Interfaces ⚡](#functional-interfaces)
 
 <details>
 <summary id="interface-overview"> <strong>Interface Overview 🧩</strong></summary>
@@ -190,3 +190,100 @@ abstract class AbstractClass2 { // With 0 abstract methods, still an abstract cl
 | Need multiple inheritance?            | Interface        |
 
 </details>
+
+<details>
+<summary id="functional-interfaces"><strong>Functional Interfaces ⚡</strong></summary>
+
+🔗 Reference: [functional interface examples](./functionalInterface)
+
+### What is a Functional Interface? 💡
+
+- A <b>functional interface</b> is an interface with exactly one abstract method (can have static, default, or private methods).
+- Enables functional programming in Java using <b>lambda expressions</b>.
+
+```java
+@FunctionalInterface // Informs the compiler this is a functional interface
+interface TestFunctionalInterface {
+    void sayGreet();
+
+    static void staticMethod() {
+        System.out.println("Interface static fun");
+    }
+
+    default void defaultMethod() {
+        privateMethod();
+        System.out.println("Interface default method");
+    }
+
+    private void privateMethod() {
+        System.out.println("Interface private method");
+    }
+}
+
+public class FunctionalInterfaceExample {
+    public static void main(String[] args) {
+        TestFunctionalInterface testFunctionalInterface = () -> System.out.println("Hello from lambda! coming from Interface");
+        testFunctionalInterface.sayGreet();
+    }
+}
+```
+
+---
+
+### Common Built-in Functional Interfaces in Java
+
+Below are some built-in functional interfaces
+
+#### 1. Predicate<T> 🧐
+Represents a boolean-valued function of one argument.
+```java
+Predicate<Integer> predicate = (num) -> num > 10;
+System.out.println("Predicate test for 15: " + predicate.test(15));
+```
+
+#### 2. Function<T, R> 🔄
+Takes one argument and returns a result.
+```java
+Function<String, String> function = (name) -> "Length of the name " + name + " is: " + name.length();
+System.out.println("Function apply for 'Hello': " + function.apply("Hello"));
+```
+
+#### 3. Consumer<T> 🍽️
+Performs an action on a single argument and returns no result.
+```java
+Consumer<String> consumer = (str) -> System.out.println("Consumed: " + str);
+consumer.accept("Hello Consumer!");
+```
+
+#### 4. Supplier<T> 🏭
+Supplies a result of a given type (no input argument).
+```java
+Supplier<Double> supplier = () -> Math.random();
+System.out.println("Supplier provided value: " + supplier.get());
+```
+
+#### 5. BiFunction<T, U, R> ➗
+Takes two arguments and returns a result.
+```java
+BiFunction<Integer, Integer, Integer> biFunction = (a, b) -> a + b;
+System.out.println("BiFunction apply for 5 and 10: " + biFunction.apply(5, 10));
+```
+
+#### 6. UnaryOperator<T> ➡️
+Special kind of Function that takes same type of input and returns sa,e type of output.
+Takes one argument and returns a result of the same type.
+```java
+UnaryOperator<Integer> unaryOperator = (num) -> num * num;
+System.out.println("UnaryOperator apply for 7: " + unaryOperator.apply(7));
+```
+
+#### 7. BinaryOperator<T> ✖️
+Special kind of BiFunction that takes same type of input and returns same type of output.
+Takes two arguments of the same type and returns a result of the same type.
+```java
+BinaryOperator<Integer> binaryOperator = (a, b) -> a * b;
+System.out.println("BinaryOperator apply for 4 and 5: " + binaryOperator.apply(4, 5));
+```
+
+</details>
+
