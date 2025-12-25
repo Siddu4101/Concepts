@@ -287,4 +287,4 @@ System.out.println("BinaryOperator apply for 4 and 5: " + binaryOperator.apply(4
 
 </details>
 
-[Functional Interface] resumed udemy functional programming
+[Functional Interface] resumed  udemy functional programming
