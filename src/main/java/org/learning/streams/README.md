@@ -116,6 +116,19 @@ IntStream rangeExcludingSecondVal = IntStream.range(0, 11); // Prints 0 to 10
 IntStream rangeClosedToIncludeSecondVal = IntStream.rangeClosed(1, 11); // Prints 1 to 11
 ```
 
+### 7. Via Stream Builder
+
+```java
+Stream<String> names = Stream.builder().add("Sid").add("Raj").add("Viju").build();
+```
+
+### 8. Via Files
+
+```java
+Stream<String> lines = Files.lines(Path.of("/input.txt")); //Reads all the lines from the file as a stream
+```
+
+
 </details>
 
 <details>
@@ -268,9 +281,9 @@ integers.stream().unordered().parallel().forEach(System.out::println); //23 26 4
 ```
 
 ### 14. `parallel` & `sequential` 🧵
-> - **`parallel()`** 🚀: Enables multi-threaded, unordered processing for time-efficient and CPU-bound tasks.
+> - **`parallel()`** 🚀: Enables multi-threaded(via default ForkJoinPool), unordered processing for time-efficient and CPU-bound tasks.
 > - **`sequential()`** 🧑‍💻: Switches back to single-threaded, ordered processing.
-> - You can combine both in a pipeline to optimize performance as needed.
+> - The one which is near to the terminal operation takes the precedence and whole pipeline runs in that mode. 
 > - Even with `parallel()`, if the terminal operation or collector is ordered, the result will be ordered. For guaranteed order, use `forEachOrdered()`.
 
 ```java
@@ -282,6 +295,20 @@ integers.stream()
     .forEach(System.out::println); // the things before sequential runs parallel and after that it runs in sequential mode
 ```
 
+> **Note:**
+> - If you want to start the stream parallel u can use the collection.parallelStream() (This is only for collection for rest u need to use the .parallel() method)
+> - But implementation wise both are implemented the same.
+> - By default the parallelism of threads uses the `ForkJoinPool.commonPool()` which will have `number_of_threads = number_of_available_processors - 1`
+
+You can run the parallel stream with your own thread pool config as
+```java
+ForkJoinPool customPool = new ForkJoinPool(4);
+customPool.submit(() ->
+        collection.parallelStream()
+              .map(...)
+              .forEach(...)).join();
+Here it uses the 4 threads only as u mentioned even u have more threads
+```
 </details>
 
 <details>
