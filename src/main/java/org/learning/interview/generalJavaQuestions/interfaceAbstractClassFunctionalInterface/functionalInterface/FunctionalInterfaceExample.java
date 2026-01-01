@@ -1,4 +1,4 @@
-package org.learning.interfaceAbstractClassFunctionalInterface.functionalInterface;
+package org.learning.interview.generalJavaQuestions.interfaceAbstractClassFunctionalInterface.functionalInterface;
 
 public class FunctionalInterfaceExample {
     public static void main(String[] args) {

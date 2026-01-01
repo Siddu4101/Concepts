@@ -1,4 +1,4 @@
-package org.learning.interfaceAbstractClassFunctionalInterface.functionalInterface;
+package org.learning.interview.generalJavaQuestions.interfaceAbstractClassFunctionalInterface.functionalInterface;
 
 import java.util.function.*;
 

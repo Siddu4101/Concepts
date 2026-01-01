@@ -1,4 +1,4 @@
-package org.learning.interfaceAbstractClassFunctionalInterface.interfaces;
+package org.learning.interview.generalJavaQuestions.interfaceAbstractClassFunctionalInterface.interfaces;
 
 public class MultiPleInheritanceViaInterface implements InterfaceTest, InterfaceTest2{
     @Override
