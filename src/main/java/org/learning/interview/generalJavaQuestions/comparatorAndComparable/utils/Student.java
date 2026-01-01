@@ -1,4 +1,4 @@
-package org.learning.comparatorAndComparable.utils;
+package org.learning.interview.generalJavaQuestions.comparatorAndComparable.utils;
 
 import lombok.Builder;
 

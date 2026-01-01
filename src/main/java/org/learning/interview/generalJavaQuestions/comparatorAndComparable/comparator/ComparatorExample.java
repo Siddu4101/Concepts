@@ -1,7 +1,7 @@
-package org.learning.comparatorAndComparable.comparator;
+package org.learning.interview.generalJavaQuestions.comparatorAndComparable.comparator;
 
 import lombok.extern.slf4j.Slf4j;
-import org.learning.comparatorAndComparable.utils.Student;
+import org.learning.interview.generalJavaQuestions.comparatorAndComparable.utils.Student;
 
 import java.util.ArrayList;
 import java.util.Comparator;
