@@ -1,4 +1,4 @@
-package org.learning.interfaceAbstractClassFunctionalInterface.abstractClass;
+package org.learning.interview.generalJavaQuestions.interfaceAbstractClassFunctionalInterface.abstractClass;
 
 public class AbstractClassExample extends AbstractClass1{ /*if we don't provide implementation for abstract method then this class also needs to be declared as abstract*/
 

@@ -29,7 +29,7 @@ Java provides two interfaces for sorting objects: <b>Comparable</b> and <b>Compa
 <details>
 <summary id="comparable"><strong>Comparable Interface 🏷️</strong></summary>
 
-🔗Reference code: [ComparableExample](./ComparableExample.java)
+🔗Reference code: [ComparableExample](comparable/ComparableExample.java)
 
 The <b>Comparable</b> interface allows a class to define its natural ordering by implementing the `compareTo()` method.
 
@@ -66,7 +66,7 @@ result : [Student[id=2, name=Raj, age=22], Student[id=1, name=Sid, age=24], Stud
 <details>
 <summary id="comparator"><strong>Comparator Interface 🧑‍⚖️</strong></summary>
 
-🔗Reference code: [ComparatorExample](./ComparatorExample.java)
+🔗Reference code: [ComparatorExample](comparator/ComparatorExample.java)
 
 The <b>Comparator</b> interface allows you to define multiple custom sorting strategies outside the class.
 
