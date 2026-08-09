@@ -477,3 +477,6 @@ KISS means:
 | **SoC**    | Separation of Concerns        | Keep different responsibilities separated(ex: springboot layers repo,service) |
 | **SOLID**  | *(see above)*                 | Five OOP design principles for maintainable and flexible code                 |
 
+
+
+
