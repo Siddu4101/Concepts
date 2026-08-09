@@ -1,4 +1,13 @@
-1. # 🧱 SOLID Principles in Java
+## 📋 Topics
+
+1. [🧱 SOLID Principles](#solid-principles)
+2. [🔁 DRY — Don't Repeat Yourself](#dry-principle)
+3. [💡 KISS — Keep It Simple, Stupid](#kiss-principle)
+
+---
+
+<a id="solid-principles"></a>
+# 1.  🧱 SOLID Principles in Java
 
 > **SOLID** is a set of five object-oriented design principles that help us write code that is **maintainable, flexible, testable, and scalable**.
 
@@ -317,3 +326,154 @@ This supports:
 * 🔄 Easy implementation changes
 * 🛠️ Better maintainability
 * 📈 Scalable architecture
+
+
+---
+
+<a id="dry-principle"></a>
+# 2. **DRY** 
+
+## 🧠 DRY — Don't Repeat Yourself
+
+> **Every piece of knowledge should have a single, authoritative representation in the codebase.**
+
+The goal is to avoid **duplicated logic**, because when the same logic exists in multiple places, changes become error-prone.
+
+### ❌ Without DRY
+
+```java
+class OrderService {
+
+    double calculateTax(double amount) {
+        return amount * 0.18;
+    }
+}
+
+class InvoiceService {
+
+    double calculateTax(double amount) {
+        return amount * 0.18;
+    }
+}
+```
+
+If the tax rate changes, you have to remember to update it in multiple places. 😬
+
+### ✅ With DRY
+
+```java
+class TaxService {
+
+    double calculateTax(double amount) {
+        return amount * 0.18;
+    }
+}
+
+class OrderService {
+
+    private final TaxService taxService;
+
+    OrderService(TaxService taxService) {
+        this.taxService = taxService;
+    }
+}
+```
+
+Now the tax calculation has **one source of truth**.
+
+---
+
+### ⚠️ DRY doesn't mean "remove every duplicate line"
+
+For example:
+
+```java
+saveUser();
+saveOrder();
+```
+
+and
+
+```java
+saveProduct();
+saveCustomer();
+```
+
+may look structurally similar, but they could represent different business concepts.
+
+**Don't blindly combine code just because it looks similar.**
+
+> 🎯 **DRY = Don't duplicate knowledge/logic, not simply "don't repeat code."**
+
+---
+
+<a id="kiss-principle"></a>
+# 3. KISS
+
+## 💡 KISS — Keep It Simple, Stupid
+
+
+> Prefer the simplest solution that correctly solves the problem.
+
+The goal is to avoid unnecessary complexity, over-engineering, and clever code that makes the application harder to understand and maintain.
+
+---
+
+### ❌ Over-engineered
+
+```java
+class NumberProcessorFactory {
+
+    NumberProcessor create() {
+        return new EvenNumberProcessor();
+    }
+}
+
+interface NumberProcessor {
+    boolean process(int number);
+}
+
+class EvenNumberProcessor implements NumberProcessor {
+
+    public boolean process(int number) {
+        return number % 2 == 0;
+    }
+}
+```
+
+For a simple operation, this introduces unnecessary classes and abstractions.
+
+### ✅ Keep It Simple
+
+```java
+boolean isEven(int number) {
+    return number % 2 == 0;
+}
+```
+
+---
+
+## ⚠️ KISS Doesn't Mean "Always Write Less Code"
+
+KISS means:
+
+* Avoid unnecessary complexity
+* Don't over-engineer
+* Prefer readable solutions
+* Use abstractions when they provide real value
+* Choose the simplest solution that solves the actual problem
+
+> Don't make simple problems complicated.
+
+---
+
+## 🧠 Other Important Design Principles
+
+| Principle  | Full Form                     | Meaning                                                                       |
+| ---------- | ----------------------------- |-------------------------------------------------------------------------------|
+| **KISS**   | Keep It Simple, Stupid        | Avoid unnecessary complexity                                                  |
+| **DRY**    | Don't Repeat Yourself         | Avoid duplicating the same knowledge or business logic                        |
+| **YAGNI**  | You Aren't Gonna Need It      | Don't build functionality until it is actually needed                         |
+| **SoC**    | Separation of Concerns        | Keep different responsibilities separated(ex: springboot layers repo,service) |
+| **SOLID**  | *(see above)*                 | Five OOP design principles for maintainable and flexible code                 |
+
