@@ -1,4 +1,6 @@
 ## 🛠️ Ways to Implement Multithreading
+
+Source: [WaysToCreateThreads.java](code/WaysToCreateThreads.java)
 In Java, there are two primary ways to create and manage threads.
 
 ### 1. Extending the `Thread` Class
@@ -98,6 +100,8 @@ classDiagram
 
 ## 🎯 Interview Special: Odd & Even Numbers
 A classic problem is printing numbers 1-30 in order using two separate threads (one for Odd, one for Even).
+
+Source:[PrintOddAndEvenIn2DifferentThreadButMaintainOrder.java](code/PrintOddAndEvenIn2DifferentThreadButMaintainOrder.java)
 
 ### 🔄 The Coordination Logic
 To ensure they print in an alternate fashion (1, 2, 3...), you must coordinate them using `sleep()` timings:

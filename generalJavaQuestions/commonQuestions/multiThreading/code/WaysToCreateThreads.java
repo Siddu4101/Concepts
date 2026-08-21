@@ -1,4 +1,4 @@
-package generalJavaQuestions.commonQuestions.multiThreading;
+package generalJavaQuestions.commonQuestions.multiThreading.code;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,6 +18,9 @@ class ViaThreadClass extends Thread{
     public static void main(String[] args) {
         ViaThreadClass viaThreadClass = new ViaThreadClass();
         viaThreadClass.start();
+
+        /*with single runnable impl class u can create n threads but this is not true when u have thread extended class everytime u need new instance for the new thread entry*/
+        /* viaThreadClass.start(); --> illegalThreadState exception can't run same thread > 1 */
     }
 }
 
@@ -38,6 +41,12 @@ class ViaRunnableInterface implements Runnable{
         ViaRunnableInterface viaRunnableInterface = new ViaRunnableInterface();
         Thread thread = new Thread(viaRunnableInterface);
         thread.start();
+
+        /*
+        * u can create multiple thread withe same runnable impl
+        *  Thread threa2 = new Thread(viaRunnableInterface);
+        *  thread2.start(); --> creates a new thread
+        * */
 
 
         /*We no need to have the class which implements the Runnable interface to have a thread based execution we can just use

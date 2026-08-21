@@ -1,4 +1,4 @@
-package generalJavaQuestions.commonQuestions.multiThreading;
+package generalJavaQuestions.commonQuestions.multiThreading.code;
 
 public class PrintOddAndEvenIn2DifferentThreadButMaintainOrder {
 /*
